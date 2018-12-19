@@ -15,22 +15,24 @@ const add = (req, res, next) => {
 
 const deleteItem = (req, res, next) => {
     const { session } = req
-    const id = req.body.id;
+    const id = req.query.id;
     let cart = req.session.user.cart;
-    let item = cart.find(item => id === item.id)
+    let item = cart.find(item => id == item.id)
+    // console.log(item)
     if (!item) {
         res.status(200).json(session.user);
-    };
-    let index = cart.indexOf(item => id === item.id)
-    cart.splice(index, 1)
-    req.session.user.total -= item.price;
-    res.status(200).json(session.user)
+    } else; {
+        let index = cart.indexOf(item => id == item.id)
+        cart.splice(index, 1)
+        req.session.user.total -= item.price;
+        res.status(200).json(session.user)
+    }
 }
 
 const checkout = (req, res, next) => {
     const { session } = req;
-    req.session.cart = [],
-    req.session.total = 0
+    req.session.user.cart = [],
+    req.session.user.total = 0
     res.status(200).json(session.user)
 
 }
