@@ -1,12 +1,11 @@
 const swag = require('../models/swag');
 
 const add = (req, res, next) => {
-    const {session} = req;
-    const id = req.body.id;
+    const { session } = req
+    const id = req.query.id;
     let cart = req.session.user.cart;
-    const newItem = swag.find(item => id === item.id);
-    console.log(newItem);
-    let item = cart.find(item => id === item.id)
+    let item = cart.find(item => id == item.id)
+    const newItem = swag.find(item => id == item.id);
     if (!item) {
         cart.push(newItem);
         req.session.user.total += newItem.price
